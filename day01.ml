@@ -1,3 +1,5 @@
+#mod_use "utils.ml"
+
 let listify_string s = s |> String.to_seq |> List.of_seq
 let stringify_list l = l |> List.to_seq |> String.of_seq
 let reverse_string s = stringify_list (List.rev (listify_string s))
@@ -56,4 +58,3 @@ let () =
       part2 lines
   with
   | e -> print_endline (Printexc.to_string e); raise e
-  
