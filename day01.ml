@@ -55,6 +55,9 @@ let part2 lines =
 let () =
   try
     let lines = Utils.read_lines "day01.txt" in
-      part2 lines
+    Printf.printf "Timing Part 1\n";
+    ignore (time_fn part1 lines);
+    Printf.printf "Timing Part 2\n";
+    ignore (time_fn part2 lines)
   with
   | e -> print_endline (Printexc.to_string e); raise e
