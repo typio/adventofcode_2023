@@ -1,5 +1,3 @@
-#mod_use "utils.ml"
-
 let total_cubes color_name = 
   match color_name with
   | "red" -> 12
