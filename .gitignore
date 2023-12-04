@@ -1,4 +1,5 @@
 *
 !*.ml
+!*.sh
 !.gitignore
 !README.md
