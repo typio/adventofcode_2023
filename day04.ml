@@ -18,7 +18,7 @@ let get_card_winners line =
                (fun winning_num -> player_num = winning_num)
                winning_numbers)
            player_numbers)
-  | _ -> failwith "Invalid input: Expected at least two sections in the list"
+  | _ -> failwith "Expected two sections seperated by |!"
 
 let rec get_score amt =
   if amt < 0 then 0 else if amt = 0 then 1 else 2 * get_score (amt - 1)
