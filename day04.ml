@@ -21,7 +21,7 @@ let get_card_winners line =
   | _ -> failwith "Expected two sections seperated by |!"
 
 let rec get_score amt =
-  if amt < 0 then 0 else if amt = 0 then 1 else 2 * get_score (amt - 1)
+  match amt with n when n < 0 -> 0 | 0 -> 1 | _ -> 2 * get_score (amt - 1)
 
 let part1 lines =
   List.fold_left ( + ) 0
