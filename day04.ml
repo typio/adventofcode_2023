@@ -31,17 +31,16 @@ let part1 lines =
   |> print_int
 
 let part2 lines =
-  let cards_n = List.length lines in
-  let copies = Array.make cards_n 0 in
+  let card_counts = Array.make (List.length lines) 1 in
   List.iteri
     (fun i line ->
       let amt = List.length (get_card_winners line) in
       for j = i + 1 to i + amt do
-        if j < Array.length copies then
-          copies.(j) <- copies.(j) + 1 + copies.(i)
+        if j < Array.length card_counts then
+          card_counts.(j) <- card_counts.(j) + card_counts.(i)
       done)
     lines;
-  Array.fold_left ( + ) 0 copies + cards_n |> print_int
+  Array.fold_left ( + ) 0 card_counts |> print_int
 
 let () =
   try
