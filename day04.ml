@@ -20,8 +20,10 @@ let get_card_winners line =
            player_numbers)
   | _ -> failwith "Expected two sections seperated by |!"
 
-let rec get_score amt =
-  match amt with n when n < 0 -> 0 | 0 -> 1 | _ -> 2 * get_score (amt - 1)
+let rec get_score = function
+  | n when n < 0 -> 0
+  | 0 -> 1
+  | n -> 2 * get_score (n - 1)
 
 let part1 lines =
   List.fold_left ( + ) 0
