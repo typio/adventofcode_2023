@@ -123,7 +123,7 @@ let () =
     Printf.printf "Timing Part 1\n";
     ignore (Utils.time_fn part1 lines);
     Printf.printf "Timing Part 2\n";
-    ignore (Utils.time_fn part2 lines)
+    ignore (Utils.time_fn part2 lines);
   with e ->
     print_endline (Printexc.to_string e);
     raise e
