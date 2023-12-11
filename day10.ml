@@ -113,7 +113,7 @@ let part2 lines =
           (0., 0) row
       with
       | _, s -> s)
-    -1 maze
+    0 maze
   |> print_int
 
 let () =
