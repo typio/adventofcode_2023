@@ -28,10 +28,17 @@ let array_filter_map f arr =
   in
   Array.of_list filtered
 
-let array_filter_some arr = array_filter_map (fun x -> x) arr
+let array_filter_some (arr : 'a option array) : 'a array =
+  array_filter_map (fun x -> x) arr
 
 let time_fn f x =
   let t = Sys.time () in
   let fx = f x in
   Printf.printf "\nExecution time: %fms\n" ((Sys.time () -. t) *. 1000.0);
   fx
+
+let delay seconds =
+  let end_time = Sys.time () +. seconds in
+  while Sys.time () < end_time do
+    () (* Busy wait *)
+  done
