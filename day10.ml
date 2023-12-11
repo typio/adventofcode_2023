@@ -16,12 +16,6 @@ let pipe_direction = function
   | 'L' -> { in_dir = [| Down; Left |]; out_dir = [| Right; Up |] }
   | _ -> { in_dir = [||]; out_dir = [||] }
 
-let flip_dir = function
-  | Up -> Down
-  | Right -> Left
-  | Down -> Up
-  | Left -> Right
-
 let get_translation = function
   | Up -> (0, -1)
   | Right -> (1, 0)
@@ -53,14 +47,6 @@ let print_maze maze =
 
 let rec bfs maze i fronts =
   let new_fronts =
-    (*   Array.map *)
-    (*     (fun char_arr -> *)
-    (*       String.init (Array.length char_arr) (Array.get char_arr)) *)
-    (*     maze *)
-    (*   |> Array.iter (Printf.printf "%s\n"); *)
-    (*   flush stdout; *)
-
-    (*   Utils.delay 0.007; *)
     let get_new_front x y directions =
       directions
       |> Array.map (fun dir ->
@@ -100,6 +86,7 @@ let part1 lines =
   bfs maze 0 [| { pos = start_position; symbol = 'S' } |] |> print_int
 
 let part2 lines =
+  (* Check commit history for the flood fill I accidentally did *)
   let maze = make_maze lines in
   let pipe_mask_maze = make_maze lines in
   let start_position = find_start pipe_mask_maze in
@@ -110,52 +97,6 @@ let part2 lines =
   |> Array.iteri (fun y row ->
          row |> Array.iteri (fun x c -> if c <> '$' then maze.(y).(x) <- '.'));
 
-  (*
-  did this bc i didn't read the instructions, and leaving it bc i feel bad deleting it
-  let row_length = Array.length maze.(0) in
-  let col_length = Array.length maze in
-
-  let rec fill_dots i =
-    let rec flood x y =
-      if x < 0 || y < 0 || x >= row_length || y >= col_length then ([||], false)
-      else if maze.(y).(x) <> '.' then ([||], false)
-      else
-        let is_outside =
-          x = 0 || y = 0 || x = row_length - 1 || y = col_length - 1
-        in
-        maze.(y).(x) <- '$';
-        let neighboring_dots =
-          [| Up; Right; Down; Left |]
-          |> Array.map (fun dir ->
-                 let dx, dy = get_translation dir in
-                 flood (x + dx) (y + dy))
-          |> Array.fold_left
-               (fun (ps, found_out) (p, is_out) ->
-                 (Array.append ps p, found_out || is_out))
-               ([| (x, y) |], is_outside)
-        in
-        neighboring_dots
-    in
-    let x = i mod row_length in
-    let y = i / row_length in
-    let c = maze.(y).(x) in
-    if (i + 1) / row_length >= Array.length maze then 0
-    else
-      let positions, is_outside = flood x y in
-      positions
-      |> Array.iter (fun (x, y) ->
-             maze.(y).(x) <- (if is_outside then 'O' else 'I'));
-      fill_dots (i + 1)
-  in
-  fill_dots 0;
-  maze
-  |> Array.fold_left
-       (fun sum row ->
-         sum
-         + (row |> Array.fold_left (fun s c -> if c = 'I' then s + 1 else s) 0))
-       0
-      |> print_int;
-      *)
   match
     Array.fold_left
       (fun (y, sum) row ->
