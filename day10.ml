@@ -97,31 +97,24 @@ let part2 lines =
   |> Array.iteri (fun y row ->
          row |> Array.iteri (fun x c -> if c <> '$' then maze.(y).(x) <- '.'));
 
-  match
-    Array.fold_left
-      (fun (y, sum) row ->
-        ( y + 1,
-          sum
-          +
-          match
-            Array.fold_left
-              (fun (x, i, s) c ->
-                if c = '|' then (x + 1, i +. 1., s)
-                  (* I just found my S is an F from looking at the input idk *)
-                else if c = 'F' || c = 'J' || c = 'S' then (x + 1, i -. 0.5, s)
-                else if c = 'L' || c = '7' then (x + 1, i +. 0.5, s)
-                else if Float.rem i 2. <> 0. && c = '.' then (
-                  maze.(y).(x) <- 'I';
-                  (x + 1, i, s + 1))
-                else (
-                  maze.(y).(x) <- 'O';
-                  (x + 1, i, s)))
-              (0, 0., 0) row
-          with
-          | _, _, s -> s ))
-      (0, 0) maze
-  with
-  | _, s -> s |> print_int
+  Array.fold_left
+    (fun sum row ->
+      sum
+      +
+      match
+        Array.fold_left
+          (fun (i, s) c ->
+            if c = '|' then (i +. 1., s)
+              (* I just found my S is an F from looking at the input idk *)
+            else if c = 'F' || c = 'J' || c = 'S' then (i -. 0.5, s)
+            else if c = 'L' || c = '7' then (i +. 0.5, s)
+            else if Float.rem i 2. <> 0. && c = '.' then (i, s + 1)
+            else (i, s))
+          (0., 0) row
+      with
+      | _, s -> s)
+    -1 maze
+  |> print_int
 
 let () =
   try
